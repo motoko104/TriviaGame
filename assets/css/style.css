@@ -32,7 +32,10 @@ li{
     border-style: solid;
     border-color: black;
     border-width: 2px;
+
 }
 .card-image-top{
+    height: 276px;
+    width: 676px;
     opacity: .5;
 }
