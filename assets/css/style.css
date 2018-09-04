@@ -1,41 +1,76 @@
 *{
-    max-width: 1200px;
+    max-width: 1100px;
 }
 body{
-    background: url(../images/bokuNoHeroBG1-1.jpg);
+    background: url(../images/bokuNoHeroBG2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: relative;
+    background-color: rgb(243, 223, 10);
+    box-shadow: 20px 20px 20px 5px rgba(243, 223, 10, 0.5) inset;
 }
 .header{
-   
     position: relative;
-    left: 50%;
+    left: 20%;
     height: 150px;
     background-image: url(../images/my-hero-academia-5748204f7f80a.png);
     background-repeat: no-repeat;
 }
+.start{
+    position: relative;
+    width: 700px;
+    height: 400px;
+    left: 5%;
+    padding: 10px;
+    margin: 10px;
+}
+.start-img, .reset-img{
+    position: relative;
+    box-shadow: 5px 5px 5px 20px rgba(243, 223, 10, 0.5) insert;
+    width: 600px;
+    height:310px;
+    margin: 15px;
+}
+.btn-lg{
+    background-color: rgb(19,99,100);
+    color: whitesmoke;
+    font-weight: 700;
+    position: relative;
+    left: 40%;
+    border-color: black;
+}
 .card{
     border-style: solid;
-    border-color: black;
+    border-color: rgb(171, 182, 23);
     border-width: 2px;
     padding: 10px;
     margin: 10px;
     width: 700px;
     height: 400px;
-    left: 37%;
+    left: 5%;
+    display: none;
 }
 li{
     text-align: center;
-    padding: 15px;
-    font-weight: 500;
+    font-size: 30px;
+    font-weight: 800;
     border-style: solid;
     border-color: black;
     border-width: 2px;
+    color: rgb(5, 5, 5);
 
 }
 .card-image-top{
-    height: 276px;
-    width: 676px;
-    opacity: .5;
+    max-height: 276px;
+    max-width: 676px;
+    opacity: 0.5;
+}
+.card-img-overlay{
+    max-height: 275px;
+    max-width: 676px;
+}
+.start{
+    display: inherit;
+}
+.card-body{
+    position: relative;
 }
