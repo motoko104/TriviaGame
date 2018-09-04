@@ -1,5 +1,6 @@
 *{
     max-width: 1100px;
+    font-family: 'Nunito', sans-serif;
 }
 body{
     background: url(../images/bokuNoHeroBG2.jpg);
@@ -15,7 +16,7 @@ body{
     background-image: url(../images/my-hero-academia-5748204f7f80a.png);
     background-repeat: no-repeat;
 }
-.start{
+.start, .reset{
     position: relative;
     width: 700px;
     height: 400px;
@@ -36,6 +37,15 @@ body{
     font-weight: 700;
     position: relative;
     left: 40%;
+    border-color: black;
+}
+.btn-sm{
+    background-color: rgb(19,99,100);
+    color: whitesmoke;
+    font-weight: 700;
+    position: relative;
+    left: 45%;
+    top: 30%;
     border-color: black;
 }
 .card{
