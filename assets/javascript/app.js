@@ -1,34 +1,84 @@
 $(document).ready(() => {
     //global variables
     const questions = {
-        1: {
+        "One": {
             question: "What is the hero name of Todoroki's famous father?",
             answer: "Endeavor",
             options: ["Midnight", "Best-Jeanist", "Kamui Woods"],
             imageUrl: "assets/images/todoroki.jpg",
             winImgUrl: "assets/images/endevor.jpg"
         },
-        2: {
+        "Two": {
             question: "Which leading hero started without a quirk?",
             answer: "Midoriya",
             options: ["Bakugo", "Todoroki", "Iida"],
             imageUrl: "assets/images/class1A.jpg",
             winImgUrl: "assets/images/midoriya.jpg"
         },
-        3: {
+        "Three": {
             question: "How did Midoriya obtain his quirk?",
             answer: "He ate one of All Might's hairs",
             options: ["He was born with them", "He drank a liquid that gave him powers", "He obtained a magic suit that gvie him his quirk"],
             imageUrl: "assets/images/quirkless.jpg",
             winImgUrl: "assets/images/eatThis.jpg"
         },
-
+        "Four": {
+            question:"How many members are part of the Wild, Wild Pussycats Team?",
+            answer: "Four",
+            options: ["Three", "Ten", "Seven"],
+            imageUrl: "assets/images/who.jpg",
+            winImgUrl: "assets/images/WWP.gif"
+        },
+        "Five": {
+            question:"Who is All Mights number one nemesis?",
+            answer: "All For One",
+            options: ["Shigaraki", "Stain", "Nomus"],
+            imageUrl: "assets/images/AllMight.jpg",
+            winImgUrl: "assets/images/allForOne.jpg"
+        },
+        "Six": {
+            question:"What is Class 1A's instructor's power?",
+            answer: " Nullify anyone's Quirk by looking at them",
+            options: ["Creates a vortex that turns anything it sucks into dust", "In crease the volume of his voice", "put targets to sleep by exuding a sleep-inducing aroma from body"],
+            imageUrl:"assets/images/aizawa.gif",
+            winImgUrl: "assets/images/eraserhead.gif"
+        },
+        "Seven": {
+            question: "How many volumes of manga are there currently for MHA?",
+            answer: "Twenty",
+            options: ["Fifteen", "Thirty", "Eight"],
+            imageUrl: "assets/images/Qseven.jpg",
+            winImgUrl: "assets/images/shock.gif"
+        },
+        "Eight": {
+            question: "Which of these Heros is not a Pro Hero?",
+            answer: "Mineta",
+            options: ["Midnight", "Cementos", "Gang Orca"],
+            imageUrl: "assets/images/AllChara.jpg_large",
+            winImgUrl: "assets/images/mineta.gif"
+        },
+        "Nine": {
+            question: "Which of these characters is a female student Hero in class 1A?",
+            answer: "Uraraka",
+            options: ["Kendo", "Shiozaki", "Toga"],
+            imageUrl: "assets/images/femaleChara.jpg",
+            winImgUrl: "assets/images/Uraraka.gif"
+        },
+        "Ten": {
+            question: "Who won first place in the sports festival?",
+            answer: "Bakugo",
+            options: ["Todoroki", "Tokoyami", "Midoriya"],
+            imageUrl: "assets/images/sportsFest.jpg",
+            winImgUrl: "assets/images/bakugou.jpg"
+        }
     };
     let chosen;
     let currentQuest;
+    let chosenQuest;
     let timer = 10;
     let run = false;
     let intervalID;
+    let arrayQuestsKeys;
     let questionArr = [];
     let questionNum = 0;
     let newArray;
@@ -36,9 +86,9 @@ $(document).ready(() => {
     let incorrect = 0;
 
     //Functions
+
     //start timer
     const startTime = () => {
-
         if (!run) {
             intervalID = setInterval(decrement, 1000);
             run = true;
@@ -64,26 +114,34 @@ $(document).ready(() => {
     }
     //what start button click does
     const startBtn = () => {
+        correct = 0;
+        incorrect = 0;
         chosen = chooseQuest();
         $('.start').css('display', 'none');
         questionRend(chosen);
     }
     //choosing a random question
     const chooseQuest = () => {
-        //$('.next').hide();
-        let questIndex = (Math.floor(Math.random() * (Object.keys(questions).length))) + 1;
-        let chosenQuest = questions[questIndex];
-        currentQuest = chosenQuest;
-        return chosenQuest;
+        arrayQuestsKeys = Object.keys(questions);
+        let questIndex = (Math.floor(Math.random() * (arrayQuestsKeys.length)));
+        let chosenQuestName = arrayQuestsKeys[questIndex];
+        currentQuest = questions[chosenQuestName];
+        chosenQuest = currentQuest;
+        console.log(questions[chosenQuestName]);
+        console.log('chosenQuest: ' + currentQuest);
+        return currentQuest;
     }
     //rendering question object to page
     const questionRend = (chosenQuest) => {
         $('.answer').remove();
         $('.card').css('display', 'inline-block');
         startTime();
+        console.log(chosenQuest);
         if (questionArr.includes(chosenQuest)) {
             //picks another question if the chosenQuest has already been chosen 
-            finishGame();
+            console.log(questions);
+           chosen = chooseQuest();
+           questionRend(chosen);
         } else {
             //renders question, number question, and image
             questionArr.push(chosenQuest);
@@ -93,12 +151,11 @@ $(document).ready(() => {
             $(".card-img-top").attr("src", image);
             $(".card-title").text(questionNum + ".)");
             $(".card-text").text(question);
-
             // adds options with answer to the options area
             options = Object.values(chosenQuest.options);
             options.push(chosenQuest.answer);
             qArrOpt = options;
-            newArray = shuffleArray(options);
+            newArray = shuffleArray(qArrOpt);
             for (let i = 0; i < 4; i++) {
                 $('.options').append('<li class=' + i + '></li>');
                 $('li.' + i + '').text(newArray[i]);
@@ -125,19 +182,20 @@ $(document).ready(() => {
             stopTime();
             $('.card-img-top').attr('src', currentQuest.winImgUrl);
             $('li').remove();
-            $('.currentQ').html("<p class = 'answer'>Correct!! the answer is: " + currentQuest.answer + "</p>");
+            $('.currentQ').html("<p class = 'answer'>Correct!! the answer is:<br>" + currentQuest.answer + "</p>");
+            console.log('correct ' + correct);
             setTimeout(finishGame , 3000);
         } else {
             incorrect++;
             stopTime();
             $('li').remove();
-            $('.currentQ').html("<p class = 'answer'>Inorrect ... the answer is: " + currentQuest.answer + "</p>");
+            $('.currentQ').html("<p class = 'answer'>Incorrect ... the answer is:<br>" + currentQuest.answer + "</p>");
+            console.log('incorrect ' + incorrect);
             setTimeout(finishGame , 3000);
         }
     }
     //checks if the trivia game is over
     const finishGame = () => {
-        console.log(correct);
         $('.card').css('display', 'none');
         let numQuestions = Object.keys(questions);
         if (questionArr.length === numQuestions.length) {
@@ -158,6 +216,7 @@ $(document).ready(() => {
         $('.reset').hide();
         chosen = '';
         currentQuest = '';
+        arrayQuestsKeys = 0;
         questionArr = [];
         questionNum = 0;
         qArrOpt = [];
