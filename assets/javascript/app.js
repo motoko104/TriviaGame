@@ -72,14 +72,13 @@ $(document).ready(() => {
             winImgUrl: "assets/images/bakugou.jpg"
         }
     };
-    let chosen;
+    let chosenSeq;
+    let currentQuestKey;
+    let currentQuestArr;
     let currentQuest;
-    let chosenQuest;
     let timer = 10;
     let run = false;
     let intervalID;
-    let arrayQuestsKeys;
-    let questionArr = [];
     let questionNum = 0;
     let newArray;
     let correct = 0;
@@ -103,7 +102,7 @@ $(document).ready(() => {
             incorrect++;
             $('li').remove();
             $('.currentQ').html("<p class = 'answer'>Time is up! correct answer: " + currentQuest.answer + "</p>");
-            setTimeout(finishGame , 5000);
+            setTimeout(finishGame , 4000);
         }
     }
     //stop timer
@@ -116,51 +115,41 @@ $(document).ready(() => {
     const startBtn = () => {
         correct = 0;
         incorrect = 0;
-        chosen = chooseQuest();
+        //chosen = chooseQuest();
+        chosenSeq = qShuff();
         $('.start').css('display', 'none');
-        questionRend(chosen);
+        questionRend(chosenSeq);
     }
-    //choosing a random question
-    const chooseQuest = () => {
-        arrayQuestsKeys = Object.keys(questions);
-        let questIndex = (Math.floor(Math.random() * (arrayQuestsKeys.length)));
-        let chosenQuestName = arrayQuestsKeys[questIndex];
-        currentQuest = questions[chosenQuestName];
-        chosenQuest = currentQuest;
-        console.log(questions[chosenQuestName]);
-        console.log('chosenQuest: ' + currentQuest);
-        return currentQuest;
-    }
+    //shuffles all of the questions to be random
+    const qShuff = () => {
+        let startArr = Object.keys(questions);
+        let newShuffQs = shuffleArray(startArr);
+        return newShuffQs;
+    } 
     //rendering question object to page
-    const questionRend = (chosenQuest) => {
+    const questionRend = (chosenQuestArr) => {
+        currentQuestArr = chosenQuestArr;
+        currentQuestKey = chosenQuestArr[0];
+        currentQuest = questions[currentQuestKey];
         $('.answer').remove();
         $('.card').css('display', 'inline-block');
         startTime();
-        console.log(chosenQuest);
-        if (questionArr.includes(chosenQuest)) {
-            //picks another question if the chosenQuest has already been chosen 
-            console.log(questions);
-           chosen = chooseQuest();
-           questionRend(chosen);
-        } else {
-            //renders question, number question, and image
-            questionArr.push(chosenQuest);
-            questionNum++;
-            let question = chosenQuest.question;
-            let image = chosenQuest.imageUrl;
-            $(".card-img-top").attr("src", image);
-            $(".card-title").text(questionNum + ".)");
-            $(".card-text").text(question);
-            // adds options with answer to the options area
-            options = Object.values(chosenQuest.options);
-            options.push(chosenQuest.answer);
-            qArrOpt = options;
-            newArray = shuffleArray(qArrOpt);
-            for (let i = 0; i < 4; i++) {
-                $('.options').append('<li class=' + i + '></li>');
-                $('li.' + i + '').text(newArray[i]);
-            }
+        questionNum++;
+        let question = currentQuest.question;
+        let image = currentQuest.imageUrl;
+        $(".card-img-top").attr("src", image);
+        $(".card-title").text(questionNum + ".)");
+        $(".card-text").text(question);
+
+        options = Object.values(currentQuest.options);
+        options.push(currentQuest.answer);
+        let qArrOpt = options;
+        newArray = shuffleArray(qArrOpt);
+        for (let i = 0; i < 4; i++) {
+            $('.options').append('<li class=' + i + '></li>');
+            $('li.' + i + '').text(newArray[i]);
         }
+
         $('li').on('click', checkAnswer);
     }
     // Shuffles array
@@ -190,19 +179,19 @@ $(document).ready(() => {
             stopTime();
             $('li').remove();
             $('.currentQ').html("<p class = 'answer'>Incorrect ... the answer is:<br>" + currentQuest.answer + "</p>");
-            console.log('incorrect ' + incorrect);
+            console.log('incorrect' + incorrect);
             setTimeout(finishGame , 3000);
         }
     }
     //checks if the trivia game is over
     const finishGame = () => {
         $('.card').css('display', 'none');
-        let numQuestions = Object.keys(questions);
-        if (questionArr.length === numQuestions.length) {
+        $('li').remove();
+        currentQuestArr.shift();
+        if(currentQuestArr.length < 1){
             end();
-        } else {
-            chosen = chooseQuest();
-            questionRend(chosen);
+        }else {
+            questionRend(currentQuestArr);
         }
     }
     //what to do at the end of the trivia game
@@ -214,16 +203,18 @@ $(document).ready(() => {
     const reset = () => {
         $('strong').remove();
         $('.reset').hide();
-        chosen = '';
-        currentQuest = '';
-        arrayQuestsKeys = 0;
-        questionArr = [];
+        currentQuestArr = [];
+        currentQuestKey = 0;
+        currentQuest = 0;
+        run = false;
+        clearInterval(intervalID);
         questionNum = 0;
-        qArrOpt = [];
-        newArray = 0;
+        newArray = [];
         correct = 0;
-        incorect = 0;
-        startBtn();
+        incorrect = 0;
+        $('li').remove();
+        chosenSeq = qShuff();
+        questionRend(chosenSeq);
     }
     //steps:
     //initially hides the reset button and image
