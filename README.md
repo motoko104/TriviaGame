@@ -8,16 +8,20 @@ Super simple! just hit the start button and get to the trivia game!
 <a href="https://motoko104.github.io/TriviaGame/">Click here to Play!</a>
 
 <h3>Images</h3>
-Start Page
+Start
+
 ![Landing](/assets/images/landing.png)
 
 Questions
+
 ![Questions](/assets/images/question.png)
 
 Answers
+
 ![Answers](/assets/images/answer.png)
 
 Final Score Page
+
 ![Scores](/assets/images/score.png)
 
 <h3>Future Development</h3>
