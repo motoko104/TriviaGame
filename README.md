@@ -9,7 +9,7 @@ Super simple! just hit the start button and get to the trivia game!
 
 <h3>Images</h3>
 Start Page
-![LandingPage](/assets/images/landing.png)
+![Landing](/assets/images/landing.png)
 
 Questions
 ![Questions](/assets/images/question.png)
